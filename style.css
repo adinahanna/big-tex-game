@@ -20,8 +20,7 @@ body {
 
 #tex {
     padding: 20px;
-    margin-top: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     width: 150px;
     display: flex;
     justify-content: center;
@@ -31,6 +30,10 @@ body {
     background-color: white;
     box-shadow: 8px 8px;
 }
+.tex-border {
+  border: 5px solid rgb(226, 51, 21); 
+}
+
 .counters {
     display: flex;
     flex-wrap: wrap;

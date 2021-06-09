@@ -4,11 +4,14 @@ const fairGoerCounter = document.querySelector('#fair-goer-counter');
 const fairGoerArr= [3, 4, 5, 6, 7, 8];
 const gameBoard = document.querySelector('.board-flex-container');
 let openedCards= [];
+let cowboysList = document.createElement('ul');
 const cakeCounterDisplay = document.querySelector('#cake-counter');
 let cakeCounter = 0;
 let randomFairGoers;
 let cardDiv;
 let incorrectMatchCounter = 0;
+const incorrectMatchCounterDisplay = document.querySelector('.incorrect-matches');
+const bigTexImg = document.querySelector('#tex');
 
 // FUNCTIONS
 // start game function
@@ -26,7 +29,6 @@ startBtn.addEventListener('click', handleStartBtnClick);
 // randomly assign number of fair-goers
 const updateFairGoers = () => {
   const randomIndex = Math.floor(Math.random() * fairGoerArr.length);
-  //console.log(fairGoerArr[randomIndex]);
   randomFairGoers = (fairGoerArr[randomIndex]);
   fairGoerCounter.innerHTML = `
   <p>There are ${randomFairGoers} people at the fair today. Make ${randomFairGoers} matches.</p>
@@ -36,7 +38,6 @@ const updateFairGoers = () => {
 
 //populate fair visitors
 const generateVisitors = () => {
-  const cowboysList = document.createElement('ul');
     for (let i = 0; i < randomFairGoers; i++){
       const cowboy = document.createElement('li');
       cowboy.innerText = '🤠';
@@ -45,9 +46,8 @@ const generateVisitors = () => {
       cowboysList.setAttribute('class', cowboysList);
       fairGoerCounter.appendChild(cowboysList);
     };
-    console.log(cowboysList);
+    //console.log(cowboysList);
 };
-
 
 //create card img array
 const cardArr = ['images/skyline.png', 'images/dr-pepper.png', 'images/eggs.png', 'images/ferris-wheel.png', 'images/corn-dog.png', 'images/flour.png', 'images/milk.png', 'images/hat.png'];
@@ -73,7 +73,6 @@ const addImages = () => {
   shuffle(doubledCardArr);
   const cardElements = document.querySelectorAll('.card');
   for (let i = 0; i < doubledCardArr.length; i++) {
-    //let image = cardArr[i].value;
     // create a new div
     cardDiv = document.createElement('div');
     // use css to update background image
@@ -86,30 +85,23 @@ const addImages = () => {
     cardElements[i].appendChild(cardDiv);
   }
 };
+
 //have them show on click
 const matchCards = (event) => {
   event.preventDefault;
   let card; 
   let cardId; 
-  //console.log(cardId);
   if (event.target.classList.contains('card')){
-    checkWin();
     card = event.target;
     cardId = event.target.firstChild.id;
-    //console.log(card);
     card.firstChild.classList.remove('hide');
     openedCards.push(cardId);
     if (openedCards.length > 1) {
       if (openedCards[1] === openedCards[0]) {
         console.log('you\'ve made a match');
-        //update matches
-        cakeCounter += 1;
-        cakeCounterDisplay.innerHTML = `You've made ${cakeCounter} funnel cakes!`;
+       updateCakeCounter();
         openedCards.splice(0, openedCards.length);
       } else {
-        //grab elements with dom id
-        //const clickedCards = document.querySelectorAll(`#${cardID}`);
-        //loop over them and add hide class list to them
         setTimeout(() => {
           for (let i = 0; i < openedCards.length; i++){
             const tempCard = document.querySelectorAll(`[id="${openedCards[i]}"]`);
@@ -118,21 +110,50 @@ const matchCards = (event) => {
         }
         openedCards.splice(0, openedCards.length);
       }, 1000);
-    }
-      console.log(openedCards);
+      updateIncorrectMatches();
+    checkWin();
     }
   }
+}
 };
 gameBoard.addEventListener('click', matchCards);
 
-
-
 // update results - incorrect or correct match
+const updateCakeCounter = () => {
+  cakeCounter += 1;
+  cakeCounterDisplay.innerHTML = `You've made ${cakeCounter} funnel cakes!`;
+};
+const updateIncorrectMatches = () => {
+  incorrectMatchCounter +=1 ;
+  incorrectMatchCounterDisplay.innerHTML = `${incorrectMatchCounter} incorrect matches`;
+};
+
 // check for win or lose: after each match check if correct matches = number of fair-goers and if number of incorrect matches = 3
 const checkWin = () => {
   if (randomFairGoers === cakeCounter) {
     alert('Yeehaw! You fed made enough funnel cakes to feed Big Tex. You win!')
+    resetGame();
+  } else if (incorrectMatchCounter >= 4) {
+      bigTexImg.classList.add('.tex-border');
+    alert('Oops you didn\'t make enough funnel cakes to feed Big Tex. You lose!');
+    resetGame();
   }
+};
+
+//reset game
+const resetGame = () => {
+  cakeCounter = 0;
+  cakeCounterDisplay.innerHTML = `You've made ${cakeCounter} funnel cakes!`;
+  incorrectMatchCounter = 0;
+  incorrectMatchCounterDisplay.innerHTML = `${incorrectMatchCounter} incorrect matches`;
+  const cardArr = document.querySelectorAll('.cardDisplay').forEach((element) => {
+    element.classList.add('hide');
+  });
+  cowboysList = '';
+  randomFairGoers = 0;
+  fairGoerCounter.innerHTML = `
+  <p>There are ${randomFairGoers} people at the fair today. Make ${randomFairGoers} matches.</p>
+  `
 };
 // update big tex image: mvp: changes to different colored big tex on lose; stretch: tints darker red on each incorrect match
 
@@ -165,6 +186,3 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 };
-
-
-
