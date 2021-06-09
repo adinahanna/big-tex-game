@@ -3,9 +3,11 @@ const startBtn = document.querySelector('#startBtn');
 const fairGoerCounter = document.querySelector('#fair-goer-counter');
 const fairGoerArr= [3, 4, 5, 6, 7, 8];
 const gameBoard = document.querySelector('.board-flex-container');
-const openedCards= [];
-const cakeCounterDisplay = document.querySelectorAll('#cake-counter');
+let openedCards= [];
+const cakeCounterDisplay = document.querySelector('#cake-counter');
 let cakeCounter = 0;
+let randomFairGoers;
+let cardDiv;
 
 // FUNCTIONS
 // start game function
@@ -24,12 +26,29 @@ startBtn.addEventListener('click', handleStartBtnClick);
 const updateFairGoers = () => {
   const randomIndex = Math.floor(Math.random() * fairGoerArr.length);
   //console.log(fairGoerArr[randomIndex]);
-  const randomFairGoers = (fairGoerArr[randomIndex]);
+  randomFairGoers = (fairGoerArr[randomIndex]);
   fairGoerCounter.innerHTML = `
   <h4>FAIR VISITORS</h4>
   <p>There are ${randomFairGoers} people at the fair today. Make ${randomFairGoers} matches.</p>
   `
+  generateVisitors();
 };
+
+//populate fair visitors
+const generateVisitors = () => {
+  const cowboysList = document.createElement('ul');
+    for (let i = 0; i < randomFairGoers; i++){
+      const cowboy = document.createElement('li');
+      cowboy.innerText = '🤠';
+      cowboy.setAttribute('class', 'cowboys');
+      cowboysList.appendChild(cowboy);
+      cowboysList.setAttribute('class', cowboysList);
+      fairGoerCounter.appendChild(cowboysList);
+    };
+    console.log(cowboysList);
+};
+
+
 //create card img array
 const cardArr = ['images/skyline.png', 'images/dr-pepper.png', 'images/eggs.png', 'images/ferris-wheel.png', 'images/corn-dog.png', 'images/flour.png', 'images/milk.png', 'images/hat.png'];
 const doubledCardArr = [...cardArr, ...cardArr];
@@ -56,7 +75,7 @@ const addImages = () => {
   for (let i = 0; i < doubledCardArr.length; i++) {
     //let image = cardArr[i].value;
     // create a new div
-    const cardDiv = document.createElement('div');
+    cardDiv = document.createElement('div');
     // use css to update background image
     cardDiv.setAttribute('id', doubledCardArr[i]);
     cardDiv.style.backgroundImage = `url('${doubledCardArr[i]}'`;
@@ -70,31 +89,44 @@ const addImages = () => {
 //have them show on click
 const matchCards = (event) => {
   event.preventDefault;
+  let card; 
+  let cardId; 
+  //console.log(cardId);
   if (event.target.classList.contains('card')){
-    const card = event.target;
-    event.target.querySelector('.cardDisplay').classList.remove('hide');
-    openedCards.push(card);
-  };
-  if (openedCards.length > 1) {
-    if (card === openedCards[0]) {
-      //update matches
-      cakeCounter += 1;
-      cakeCounterDisplay.innerHTML = `You've made ${cakeCounter} cakes!`;
-    } else {
-      card.classList.add('hide');
+    card = event.target;
+    cardId = event.target.firstChild.id;
+    //console.log(card);
+    card.firstChild.classList.remove('hide');
+    openedCards.push(cardId);
+    if (openedCards.length > 1) {
+      if (openedCards[1] === openedCards[0]) {
+        console.log('you\'ve made a match');
+        //update matches
+        cakeCounter += 1;
+        cakeCounterDisplay.innerHTML = `You've made ${cakeCounter} cakes!`;
+        openedCards.splice(0, openedCards.length);
+      } else {
+        //grab elements with dom id
+        //const clickedCards = document.querySelectorAll(`#${cardID}`);
+        //loop over them and add hide class list to them
+        for (let i = 0; i < openedCards.length; i++){
+          const tempCard = document.querySelector(`[id="${openedCards[i]}"]`);
+          tempCard.classList.add('hide');
+          console.log(tempCard);
+        }
+        openedCards.splice(0, openedCards.length);
+      }
+      console.log(openedCards);
     }
-  }
+  };
 };
 gameBoard.addEventListener('click', matchCards);
 
 
 
-
-// populate cowboy emojis based on number of fair-goers
 // update results - incorrect or correct match
 // check for win or lose: after each match check if correct matches = number of fair-goers and if number of incorrect matches = 3
 // update big tex image: mvp: changes to different colored big tex on lose; stretch: tints darker red on each incorrect match
-
 
 
 // MODAL FUNCTIONALITY

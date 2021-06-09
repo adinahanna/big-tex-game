@@ -6,9 +6,10 @@ body {
     margin: 20px;
     height: 700px;
     width: 768px;
-    /*background-image: url('');
+    background-image: url('images/background-img.png');
     background-repeat: no-repeat;
-    background-size: cover;   */
+    background-size: cover;
+    
 }
 
 #gameplay-button-container {
@@ -27,8 +28,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 3px solid rgb(27, 27, 70);
+    border: 3px solid rgba(35, 30, 32);
     border-radius: 5px;
+    background-color: white;
+    box-shadow: 8px 8px;
 }
 .counters {
     display: flex;
@@ -36,6 +39,11 @@ body {
     justify-content: flex-end;
     flex-direction: column;
     font-size: 14px;
+    width: 200px;
+}
+.cowboys {
+  display: inline;
+  margin: 8px;
 }
 
 .board-flex-container {
@@ -50,8 +58,10 @@ body {
     display: flex;
     width: 180px;
     height: 115px;
-    background-color: rgba(216, 165, 174, 0.952);
+    background-color: rgba(240, 237, 100, 0.918);
     margin: 5px;
+    box-shadow: 5px 5px lightslategray;
+    border-radius: 5px;
 }
 
 /* The Modal (background) */
