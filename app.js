@@ -3,7 +3,9 @@ const startBtn = document.querySelector('#startBtn');
 const fairGoerCounter = document.querySelector('#fair-goer-counter');
 const fairGoerArr= [3, 4, 5, 6, 7, 8];
 const gameBoard = document.querySelector('.board-flex-container');
-
+const openedCards= [];
+const cakeCounterDisplay = document.querySelectorAll('#cake-counter');
+let cakeCounter = 0;
 
 // FUNCTIONS
 // start game function
@@ -29,7 +31,7 @@ const updateFairGoers = () => {
   `
 };
 //create card img array
-const cardArr = ['images/dallas-skyline.jpeg', 'images/dr-pepper.png', 'images/eggs.png', 'images/ferris-wheel.png', 'images/fletchers.png', 'images/flour.jpeg', 'images/milk.png', 'images/hat.png'];
+const cardArr = ['images/skyline.png', 'images/dr-pepper.png', 'images/eggs.png', 'images/ferris-wheel.png', 'images/corn-dog.png', 'images/flour.png', 'images/milk.png', 'images/hat.png'];
 const doubledCardArr = [...cardArr, ...cardArr];
  
 // shuffle card deck - Fisher-Yates shuffle
@@ -69,19 +71,23 @@ const addImages = () => {
 const matchCards = (event) => {
   event.preventDefault;
   if (event.target.classList.contains('card')){
+    const card = event.target;
     event.target.querySelector('.cardDisplay').classList.remove('hide');
+    openedCards.push(card);
+  };
+  if (openedCards.length > 1) {
+    if (card === openedCards[0]) {
+      //update matches
+      cakeCounter += 1;
+      cakeCounterDisplay.innerHTML = `You've made ${cakeCounter} cakes!`;
+    } else {
+      card.classList.add('hide');
+    }
   }
 };
 gameBoard.addEventListener('click', matchCards);
 
-//check if match
-const checkIfMatch = (event) => {
-  
 
-  
-
-};
-gameBoard.addEventListener('click', checkIfMatch);
 
 
 // populate cowboy emojis based on number of fair-goers
