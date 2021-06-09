@@ -8,6 +8,7 @@ const cakeCounterDisplay = document.querySelector('#cake-counter');
 let cakeCounter = 0;
 let randomFairGoers;
 let cardDiv;
+let incorrectMatchCounter = 0;
 
 // FUNCTIONS
 // start game function
@@ -28,7 +29,6 @@ const updateFairGoers = () => {
   //console.log(fairGoerArr[randomIndex]);
   randomFairGoers = (fairGoerArr[randomIndex]);
   fairGoerCounter.innerHTML = `
-  <h4>FAIR VISITORS</h4>
   <p>There are ${randomFairGoers} people at the fair today. Make ${randomFairGoers} matches.</p>
   `
   generateVisitors();
@@ -93,6 +93,7 @@ const matchCards = (event) => {
   let cardId; 
   //console.log(cardId);
   if (event.target.classList.contains('card')){
+    checkWin();
     card = event.target;
     cardId = event.target.firstChild.id;
     //console.log(card);
@@ -103,22 +104,24 @@ const matchCards = (event) => {
         console.log('you\'ve made a match');
         //update matches
         cakeCounter += 1;
-        cakeCounterDisplay.innerHTML = `You've made ${cakeCounter} cakes!`;
+        cakeCounterDisplay.innerHTML = `You've made ${cakeCounter} funnel cakes!`;
         openedCards.splice(0, openedCards.length);
       } else {
         //grab elements with dom id
         //const clickedCards = document.querySelectorAll(`#${cardID}`);
         //loop over them and add hide class list to them
-        for (let i = 0; i < openedCards.length; i++){
-          const tempCard = document.querySelector(`[id="${openedCards[i]}"]`);
-          tempCard.classList.add('hide');
-          console.log(tempCard);
+        setTimeout(() => {
+          for (let i = 0; i < openedCards.length; i++){
+            const tempCard = document.querySelectorAll(`[id="${openedCards[i]}"]`);
+            tempCard.forEach((card) => card.classList.add('hide'));
+            console.log(tempCard);
         }
         openedCards.splice(0, openedCards.length);
-      }
+      }, 1000);
+    }
       console.log(openedCards);
     }
-  };
+  }
 };
 gameBoard.addEventListener('click', matchCards);
 
@@ -126,6 +129,11 @@ gameBoard.addEventListener('click', matchCards);
 
 // update results - incorrect or correct match
 // check for win or lose: after each match check if correct matches = number of fair-goers and if number of incorrect matches = 3
+const checkWin = () => {
+  if (randomFairGoers === cakeCounter) {
+    alert('Yeehaw! You fed made enough funnel cakes to feed Big Tex. You win!')
+  }
+};
 // update big tex image: mvp: changes to different colored big tex on lose; stretch: tints darker red on each incorrect match
 
 
