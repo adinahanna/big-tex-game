@@ -1,5 +1,4 @@
 *{
-    border: 1px solid pink;
     box-sizing: border-box;
 }
 body {
@@ -12,13 +11,13 @@ body {
     background-size: cover;   */
 }
 
-.gameplay-button-container {
+#gameplay-button-container {
     display: flex;
-    height: 150px;
-    width: 300px;
+    /* height: 150px;
+    width: 300px; */
     align-items: flex-start;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    /*flex-wrap: wrap; */
 }
 
 #tex {
@@ -28,10 +27,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 3px solid rgb(27, 27, 70);
+    border-radius: 5px;
 }
 .counters {
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-end;
+    flex-direction: column;
+    font-size: 14px;
 }
 
 .board-flex-container {
@@ -46,6 +50,8 @@ body {
     display: flex;
     width: 180px;
     height: 115px;
+    background-color: rgba(216, 165, 174, 0.952);
+    margin: 5px;
 }
 
 /* The Modal (background) */
@@ -87,4 +93,17 @@ body {
   
   .welcome {
     text-align: center;
+  }
+  
+  .cardDisplay {
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    border: 1px solid black;
+    border-radius: 3px;
+    justify-content: center;
+  }
+  .hide {
+    display: none;
   }
