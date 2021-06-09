@@ -22,7 +22,10 @@ const handleStartBtnClick = event => {
 // card deck is shuffled 
 //images placed
   addImages();
+  disableButton();
 };
+const disableButton = () => startBtn.disabled = true;
+const enableButton = () => startBtn.disabled = false;
 
 startBtn.addEventListener('click', handleStartBtnClick);
 
@@ -31,8 +34,8 @@ const updateFairGoers = () => {
   const randomIndex = Math.floor(Math.random() * fairGoerArr.length);
   randomFairGoers = (fairGoerArr[randomIndex]);
   fairGoerCounter.innerHTML = `
-  <p>There are ${randomFairGoers} people at the fair today. Make ${randomFairGoers} matches.</p>
-  `
+  <p>There are ${randomFairGoers} people at the fair. Make ${randomFairGoers} matches.</p>
+  `;
   generateVisitors();
 };
 
@@ -149,11 +152,12 @@ const resetGame = () => {
   const cardArr = document.querySelectorAll('.cardDisplay').forEach((element) => {
     element.classList.add('hide');
   });
-  cowboysList = '';
+  cowboysList.innerText = '';
   randomFairGoers = 0;
   fairGoerCounter.innerHTML = `
-  <p>There are ${randomFairGoers} people at the fair today. Make ${randomFairGoers} matches.</p>
-  `
+  <p>There are ${randomFairGoers} people at the fair. Make ${randomFairGoers} matches.</p>
+  `;
+  enableButton();
 };
 // update big tex image: mvp: changes to different colored big tex on lose; stretch: tints darker red on each incorrect match
 
