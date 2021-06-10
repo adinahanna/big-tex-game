@@ -12,7 +12,8 @@ let cardDiv;
 let incorrectMatchCounter = 0;
 const incorrectMatchCounterDisplay = document.querySelector('.incorrect-matches');
 const bigTexImg = document.querySelector('#tex');
-const playAgainBtn = document.querySelector('#play-again-btn');
+const playAgainBtnWin = document.querySelector('#play-again-btn-win');
+const playAgainBtnLose = document.querySelector('#play-again-btn-lose');
 
 // FUNCTIONS
 // start game function
@@ -136,12 +137,10 @@ const checkWin = () => {
   if (randomFairGoers === cakeCounter) {
     showWinOverlay();
   } else if (incorrectMatchCounter >= 4) {
-      bigTexImg.classList.add('.tex-border');//not working
-      setTimeout(() => { 
+      bigTexImg.style.border= '5px solid rgb(226, 51, 21)';
         showLoseOverlay();
-      }, 1000);
-  }
-};
+      }
+  };
 
 //overlay functions
 const showWinOverlay = () => document.getElementById('win-overlay').style.display = 'block';
@@ -155,26 +154,24 @@ const hideLoseOverlay = () => document.getElementById('lose-overlay').style.disp
 //reset game
 const resetGame = () => {
   cakeCounter = 0;
-  cakeCounterDisplay.innerHTML = `You've made ${cakeCounter} funnel cakes!`;
   incorrectMatchCounter = 0;
-  incorrectMatchCounterDisplay.innerHTML = `${incorrectMatchCounter} incorrect matches`;
   const cardArr = document.querySelectorAll('.cardDisplay').forEach((element) => {
     element.classList.add('hide');
   });
-  cowboysList.innerText = '';
   randomFairGoers = 0;
-  fairGoerCounter.innerHTML = `
-  <p>There are ${randomFairGoers} people at the fair. Make ${randomFairGoers} matches.</p>
-  `;
-  enableButton();
 };
 
 const handlePlayAgainBtn = () => {
+  cowboysList.innerText = '';
   hideLoseOverlay();
   hideWinOverlay();
   resetGame();
+  updateFairGoers();
+  addImages();
+  bigTexImg.style.border = '3px solid rgb(35, 30, 32)';
 };
-playAgainBtn.addEventListener('click', handlePlayAgainBtn);
+playAgainBtnWin.addEventListener('click', handlePlayAgainBtn);
+playAgainBtnLose.addEventListener('click', handlePlayAgainBtn);
 
 
 // MODAL FUNCTIONALITY
