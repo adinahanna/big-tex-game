@@ -12,6 +12,7 @@ let cardDiv;
 let incorrectMatchCounter = 0;
 const incorrectMatchCounterDisplay = document.querySelector('.incorrect-matches');
 const bigTexImg = document.querySelector('#tex');
+const playAgainBtn = document.querySelector('#play-again-btn');
 
 // FUNCTIONS
 // start game function
@@ -49,7 +50,6 @@ const generateVisitors = () => {
       cowboysList.setAttribute('class', cowboysList);
       fairGoerCounter.appendChild(cowboysList);
     };
-    //console.log(cowboysList);
 };
 
 //create card img array
@@ -134,14 +134,23 @@ const updateIncorrectMatches = () => {
 // check for win or lose: after each match check if correct matches = number of fair-goers and if number of incorrect matches = 3
 const checkWin = () => {
   if (randomFairGoers === cakeCounter) {
-    alert('Yeehaw! You fed made enough funnel cakes to feed Big Tex. You win!')
-    resetGame();
+    showWinOverlay();
   } else if (incorrectMatchCounter >= 4) {
-      bigTexImg.classList.add('.tex-border');
-    alert('Oops you didn\'t make enough funnel cakes to feed Big Tex. You lose!');
-    resetGame();
+      bigTexImg.classList.add('.tex-border');//not working
+      setTimeout(() => { 
+        showLoseOverlay();
+      }, 1000);
   }
 };
+
+//overlay functions
+const showWinOverlay = () => document.getElementById('win-overlay').style.display = 'block';
+
+const hideWinOverlay = () => document.getElementById('win-overlay').style.display = 'none';
+
+const showLoseOverlay = () => document.getElementById('lose-overlay').style.display = 'block';
+
+const hideLoseOverlay = () => document.getElementById('lose-overlay').style.display = 'none';
 
 //reset game
 const resetGame = () => {
@@ -159,7 +168,13 @@ const resetGame = () => {
   `;
   enableButton();
 };
-// update big tex image: mvp: changes to different colored big tex on lose; stretch: tints darker red on each incorrect match
+
+const handlePlayAgainBtn = () => {
+  hideLoseOverlay();
+  hideWinOverlay();
+  resetGame();
+};
+playAgainBtn.addEventListener('click', handlePlayAgainBtn);
 
 
 // MODAL FUNCTIONALITY
@@ -176,13 +191,13 @@ const span = document.getElementsByClassName("close")[0];
 const showModal = (event) => {
     event.preventDevault;
     modal.style.display = 'block';
-}
+};
 modalBtn.addEventListener('click', showModal);
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
-}
+};
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
