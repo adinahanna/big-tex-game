@@ -15,6 +15,7 @@ This is the first game I've built start to finish for the browser. I quickly lea
 1. populate funnel cakes in the funnel cake counter div as the player creates matches
 2. interaction/animation to the Big Tex image
 3. card flip animation
+4. more responsive styling and appropriate CSS for mobile play
 
 #Screenshot
 ![Screenshot of game]
