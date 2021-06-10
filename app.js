@@ -163,7 +163,7 @@ const resetGame = () => {
 
 const handlePlayAgainBtn = () => {
   cowboysList.innerText = '';
-  incorrectMatchCounter.innerText = '';
+  incorrectMatchCounterDisplay.innerText = '';
   hideLoseOverlay();
   hideWinOverlay();
   resetGame();
