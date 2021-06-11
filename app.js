@@ -48,7 +48,7 @@ const generateVisitors = () => {
       cowboy.innerText = '🤠';
       cowboy.setAttribute('class', 'cowboys');
       cowboysList.appendChild(cowboy);
-      cowboysList.setAttribute('class', cowboysList);
+      cowboysList.setAttribute('class', 'cowboysList');
       fairGoerCounter.appendChild(cowboysList);
     };
 };
@@ -77,6 +77,7 @@ const addImages = () => {
   shuffle(doubledCardArr);
   const cardElements = document.querySelectorAll('.card');
   for (let i = 0; i < doubledCardArr.length; i++) {
+    cardElements[i].innerHTML='';
     // create a new div
     cardDiv = document.createElement('div');
     // use css to update background image
