@@ -137,7 +137,7 @@ const updateIncorrectMatches = () => {
 const checkWin = () => {
   if (randomFairGoers === cakeCounter) {
     showWinOverlay();
-  } else if (incorrectMatchCounter >= 4) {
+  } else if (incorrectMatchCounter >= 5) {
       bigTexImg.style.border= '5px solid rgb(226, 51, 21)';
         showLoseOverlay();
       }
